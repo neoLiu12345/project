@@ -12,15 +12,16 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 // const webpack = require('webpack')
 
 // 静态资源地址
-const publicPath = 'http://localhost:3000'
+const staticPath = 'http://localhost:3000/'
 module.exports = function () {
     let filesname = ['index', 'other']
     let entry = {}
-    /** 多页面打包，通过循环，生成多个入口 */
+    /** 多页面打包，通过循环，动态生成多个入口 */
     filesname.forEach(filename => {
         entry[filename] =  `./src/${filename}.js`
     })
     return {
+        // sourceMap:
         /** 入口文件 */
         entry,
         // entry: {
@@ -31,7 +32,7 @@ module.exports = function () {
         output: {
             filename: '[name].bundle.[hash:8].js',// 打包后的文件名name: 入口名称是什么默认就是什么名称    hash:8自动生产8位数的数字字母，保持每次打包文件名不一样（解决缓存问题）
             path: path.resolve('dist'),// 路径必须是一个绝对路径，（__dirname）以当前目录产生一个绝对路径
-            publicPath: publicPath//全部加，也可以单独给css、js、img加路径
+            publicPath: staticPath//全部加，也可以单独给css、js、img加路径
         },
         /** 插件  */
         plugins: [
@@ -43,7 +44,8 @@ module.exports = function () {
             // }),
             /** 抽离样式 */
             new MiniCssExtractPlugin({
-                filename: '[name].css'
+                filename: '[name].css',
+                publicPath: `${staticPath}/css/`
             })
         ].concat(filesname.map(filename =>  
             /** 生产打包后的html文件 */ // return省略了
@@ -138,7 +140,7 @@ module.exports = function () {
                                 // 增加这个
                                 esModule: false,
                                 name: '[hash:12].[ext]',
-                                publicPath: publicPath + '/images/'
+                                outputPath: `images`
                             },
                         }
                     ]

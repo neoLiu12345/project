@@ -25,8 +25,8 @@
 -       yarn add uglifyjs-webpack-plugin -D
 -   Es6+ 转为Es5格式： babel-loader @babel/core @babel/preset-env
 -       yarn add babel-loader @babel/core @babel/preset-env -D
--       yarn add @babel/plugin-proposal-class-properties -D
--       yarn add @babel/plugin-proposal-decorators -D
+-       yarn add @babel/plugin-proposal-class-properties -D // 待确认
+-       yarn add @babel/plugin-proposal-decorators -D // 待确认
 -       yarn add @babel/plugin-transform-runtime -D  // function * gen () {}
 -       yarn add @babel/polyfill  需要引入代码内，把能加-D -> 'aaa': includes('a')
 
@@ -59,3 +59,4 @@
 ## 其他
 -   打包时 删除console.log,  -目前没有安装，看实际情况
 -       yarn add uglifyjs-webpack-plugin -D
+-   sourceMap
