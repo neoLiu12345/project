@@ -1,4 +1,4 @@
 module.exports = {
-    a: 'aaaa',
-    b: 'bbbggbg'
+    a: '阿达的',
+    b: 'bbbgdagbg'
 }
