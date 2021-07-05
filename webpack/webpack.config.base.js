@@ -11,26 +11,47 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 // const webpack = require('webpack')
 
+// 静态资源地址
+const publicPath = 'http://localhost:3000'
 module.exports = function () {
+    let filesname = ['index', 'other']
+    let entry = {}
+    /** 多页面打包，通过循环，生成多个入口 */
+    filesname.forEach(filename => {
+        entry[filename] =  `./src/${filename}.js`
+    })
     return {
         /** 入口文件 */
-        entry: {
-            index: './src/index.js'
-        },
+        entry,
+        // entry: {
+        //     index: './src/index.js',
+        //     other: './src/other.js'
+        // },
         /** 出口文件 */
         output: {
             filename: '[name].bundle.[hash:8].js',// 打包后的文件名name: 入口名称是什么默认就是什么名称    hash:8自动生产8位数的数字字母，保持每次打包文件名不一样（解决缓存问题）
             path: path.resolve('dist'),// 路径必须是一个绝对路径，（__dirname）以当前目录产生一个绝对路径
-            publicPath: '/'
+            publicPath: publicPath//全部加，也可以单独给css、js、img加路径
         },
         /** 插件  */
         plugins: [
-            /** 生产打包后的html文件 */
+            // new HtmlWebpackPlugin({
+            //     template: './src/other.html',
+            //     filename: 'other.html',
+            //     hash: false,
+            //     chunks: ['other']
+            // }),
+            /** 抽离样式 */
+            new MiniCssExtractPlugin({
+                filename: '[name].css'
+            })
+        ].concat(filesname.map(filename =>  
+            /** 生产打包后的html文件 */ // return省略了
             new HtmlWebpackPlugin({
                 // 入口文件
-                template: './src/index.html',
+                template: `./src/${filename}.html`,
                 // 出口文件名
-                filename: 'index.html',
+                filename: `${filename}.html`,
                 // 是否增加 hash 值
                 hash: false,
                 /*** 压缩html 配置  */
@@ -38,23 +59,22 @@ module.exports = function () {
                     // 删除双引号
                     removeAttributeQuotes: true,
                     // 是否折叠空行
-                    collapseWhitespace: false
-                }
-            }),
-            /** 抽离样式 */
-            new MiniCssExtractPlugin({
-                filename: 'index.css'
+                    collapseWhitespace: false,
+                    // removeComments: true
+                },
+                // 代码块， 多页面打包时，根据名字去区分，打包生成对应页面引入 资源
+                chunks: [filename]
             })
-        ],
+        )),
         /** 模块 */
         module: {
             rules: [
                 {
-                    test: /\.html/
-                    use: "html-"
+                    test: /\.html$/,
+                    use: 'html-withimg-loader'
                 },
                 {
-                    test: /\.js/,
+                    test: /\.js$/,
                     use: {
                         loader: 'eslint-loader',
                         options: {
@@ -108,15 +128,19 @@ module.exports = function () {
                     ]
                 },
                 {
-                    test: /\.(png|jpe?g|gif|svg)$/,
+                    test: /\.(jpg|jpeg|png|gif|svg)$/,
                     use: [
-                        // {
-                        //     loader: 'url-loader',
-                        //     options: {
-                        //         limit: 2048,
-                        //     },
-                        // },
-                        'file-loader'
+                        {
+                            loader: 'url-loader',
+                            options: {
+                                // 小于 8k 全部压缩
+                                limit: 1024 * 2,
+                                // 增加这个
+                                esModule: false,
+                                name: '[hash:12].[ext]',
+                                publicPath: publicPath + '/images/'
+                            },
+                        }
                     ]
                 }
             ]

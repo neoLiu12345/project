@@ -37,15 +37,15 @@
 -       yarn add sass node-sass@4.14.1 sass-loader@7.3.1 -D
 -       yarn add postcss-loader@^3.0.0 autoprefixer@8.0.0 -D
 -           loader内的use可以些成, 对象use:[{loader: "style-loader"}, "css-loader"]
--           loader内的use可以些成, 数组use:["style-loader", "css-loader"]
--   html loader
--       
+-           loader内的use可以些成, 数组use:["style-loader", "css-loader"] 
 
 ## 图片处理 
--   file-loader 默认会在内部生成一张图片，到dist目录下，返回生成后的文件名
--       yarn add file-loader -D
 -   url-loader
 -       yarn add url-loader -D
+-   html loader, 在html内引入图片
+-       yarn add html-withimg-loader -D
+-   file-loader 默认会在内部生成一张图片，到dist目录下，返回生成后的文件名
+-       yarn add file-loader -D
 
 ## 第三方模块
 -   externals设置打包时不打包，第三方插件
@@ -55,3 +55,7 @@
 -       pre 前面执行的loader
 -       normal 普通loader
 -       
+
+## 其他
+-   打包时 删除console.log,  -目前没有安装，看实际情况
+-       yarn add uglifyjs-webpack-plugin -D
