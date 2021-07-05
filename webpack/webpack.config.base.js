@@ -20,7 +20,8 @@ module.exports = function () {
         /** 出口文件 */
         output: {
             filename: '[name].bundle.[hash:8].js',// 打包后的文件名name: 入口名称是什么默认就是什么名称    hash:8自动生产8位数的数字字母，保持每次打包文件名不一样（解决缓存问题）
-            path: path.resolve('dist')// 路径必须是一个绝对路径，（__dirname）以当前目录产生一个绝对路径
+            path: path.resolve('dist'),// 路径必须是一个绝对路径，（__dirname）以当前目录产生一个绝对路径
+            publicPath: '/'
         },
         /** 插件  */
         plugins: [
@@ -48,6 +49,10 @@ module.exports = function () {
         /** 模块 */
         module: {
             rules: [
+                {
+                    test: /\.html/
+                    use: "html-"
+                },
                 {
                     test: /\.js/,
                     use: {
@@ -103,8 +108,16 @@ module.exports = function () {
                     ]
                 },
                 {
-                    test: /\.(png|jpg|gif|svg)$/,
-                    use: 'file-loader'
+                    test: /\.(png|jpe?g|gif|svg)$/,
+                    use: [
+                        // {
+                        //     loader: 'url-loader',
+                        //     options: {
+                        //         limit: 2048,
+                        //     },
+                        // },
+                        'file-loader'
+                    ]
                 }
             ]
         },

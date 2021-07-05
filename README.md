@@ -32,18 +32,24 @@
 
 ## Loader 模块规则
 -   css相关
--   yarn add css-loader style-loader@^2.0.0 -D
--   yarn add less less-loader -D
--   yarn add sass node-sass@4.14.1 sass-loader@7.3.1 -D
--   yarn add postcss-loader@^3.0.0 autoprefixer@8.0.0 -D
--       loader内的use可以些成, 对象use:[{loader: "style-loader"}, "css-loader"]
--       loader内的use可以些成, 数组use:["style-loader", "css-loader"]
+-       yarn add css-loader style-loader@^2.0.0 -D
+-       yarn add less less-loader -D
+-       yarn add sass node-sass@4.14.1 sass-loader@7.3.1 -D
+-       yarn add postcss-loader@^3.0.0 autoprefixer@8.0.0 -D
+-           loader内的use可以些成, 对象use:[{loader: "style-loader"}, "css-loader"]
+-           loader内的use可以些成, 数组use:["style-loader", "css-loader"]
+-   html loader
+-       
 
 ## 图片处理 
--  file-loader 默认会在内部生成一张图片，到dist目录下，返回生成后的文件名
--   yarn add file-loader -D
+-   file-loader 默认会在内部生成一张图片，到dist目录下，返回生成后的文件名
+-       yarn add file-loader -D
+-   url-loader
+-       yarn add url-loader -D
 
 ## 第三方模块
+-   externals设置打包时不打包，第三方插件
+-       externals:{"jquery": "jquery"}
 -   yarn add jquery
 -       expose-loader 暴露全局的loader， 
 -       pre 前面执行的loader
