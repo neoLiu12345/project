@@ -37,6 +37,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
     "bootstrap": "^4.6.0",
+    "happypack": "^5.0.1",
     "jquery": "^3.6.0",
     "moment": "^2.29.1"
   }
