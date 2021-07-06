@@ -5,9 +5,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 // 抽离css文件
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 // 删除当前打包文件夹下的内容
-let { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
-// const webpack = require('webpack')
+const webpack = require('webpack')
 
 // 静态资源地址
 const staticPath = 'http://localhost:3000/'
@@ -45,9 +45,16 @@ module.exports = function () {
                 filename: '[name].css',
                 publicPath: `${staticPath}/css/`
             }),
-            /** 删除文件 */
-            new CleanWebpackPlugin({
-                cleanOnceBeforeBuildPatterns: ['./dist/images', '!.gitignore'],
+            /** 删除文件 根据实际情况决定 */
+            // new CleanWebpackPlugin({
+            //     cleanOnceBeforeBuildPatterns: ['./dist', '!.gitignore'],
+            //     // cleanOnceBeforeBuildPatterns: ['需要删除的文件目录', '!.gitignore'],
+            // }),
+            /** 定义环境变量. 可以抽离出去，区分开发和测试环境， */
+            new webpack.DefinePlugin({
+                // DEV可根绝接口进行配置， dev可以是对应的接口地址比如：http://dex.waliwang.com/api/*
+                DEV: JSON.stringify('dev'),// 字符串可以 通过JSON.stringfy()
+                FLAG: 'true',// 布尔值, 或其他非字符串 不需要加，JSON.stringfy()
             })
         ].concat(filesname.map(filename =>  
             /** 生产打包后的html文件 */ // return省略了
@@ -115,7 +122,7 @@ module.exports = function () {
                 */
                 {
                     test: /\.(css|scss|less)$/,
-                    exclude: /node_modules/,
+                    // exclude: /node_modules/,
                     use: [
                         /** 可以是对象的形式 */
                         // {
@@ -152,6 +159,16 @@ module.exports = function () {
         /** 打包时过滤的插件 */
         externals: {
             "jquery": "jquery"
+        },
+        /** 第三方包 */
+        resolve: {
+            // modules: [path.resolve('node_modules')],
+            // 页面内引入 外部文件，可省略后缀，如：xx.vue可直接xx, 按照顺序一次解析
+            extensions: ['.js', '.tsx', 'vue', '.html'],
+            /** 别名 */
+            alias: {
+                bootstrap: 'bootstrap/dist/css/bootstrap.css'
+            }
         }
     }
 }

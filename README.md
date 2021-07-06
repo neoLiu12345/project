@@ -73,6 +73,14 @@
 -       cheap-module-eval-source-map： 不会产生文件， 集成在打包后的文件中 不会产生列
 
 
-## 跨越问题
+## 跨越问题、 自定义mock数据
+-   proxy
+-   mock 数据
 -   服务端启动webpack, 在服务端启动webpack
 -       yarn add webpack-dev-middleware -D ---》 选择性使用
+
+## resolve
+查看webpack/webpack.config.base.js, 内部配置
+
+## 定义环境变量
+-    webpack自带插件  webpack.definePlugin

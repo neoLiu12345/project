@@ -1,3 +1,12 @@
+import 'bootstrap'
+import './home.scss'
+
+
+
+console.log('DEV: ', DEV)
+if(DEV === 'dev') {
+    console.log(DEV)
+}
 // import $ from 'jquery'
 // console.log($)
 // let win = window
@@ -11,7 +20,8 @@
 
 // require('./background.css')
 // // require('./less.less')
-require('./scss.scss')
+// require('./scss.scss')
+
 console.log('home sad asda1231f')
 // let fn = () => {
 //     console.log('测试 Es 6')
