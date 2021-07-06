@@ -16,7 +16,19 @@ module.exports = function () {
             new CssMinimizerPlugin(),
             /** 压缩js */
             new UglifyJsPlugin()
-        ]
+        ],
+        /** 分割代码块 --》 看情况使用 */
+        splitChunks: {
+            /** 缓存组 */
+            cacheGroups: {
+                /** 公共模块 */
+                common: {
+                    chunks: 'initial',// 入口处， 
+                    minSize: 0,// 大小
+                    minChunks: 2,// 使用次数
+                }
+            }
+        }
     }
     
     return webpackBase

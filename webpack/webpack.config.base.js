@@ -13,7 +13,7 @@ const webpack = require('webpack')
 const Happypack = require('happypack')
 
 // 静态资源地址
-const staticPath = 'http://localhost:3000'
+const staticPath = 'http://localhost:3000/'
 module.exports = function () {
     let filesname = ['index', 'other']
     let entry = {}
@@ -72,6 +72,7 @@ module.exports = function () {
                                 '@babel/preset-env'
                             ],
                             // plugins: [
+                            //     // "@babel/plugin-syntax-dynamic-import"
                             //     // "@babel/plugin-transform-runtime", //有问题后期查
                             //     ['@babel/plugin-proposal-decorators', {"legacy": true}],
                             //     ['@babel/plugin-proposal-class-properties', {"loose": true}]
@@ -164,7 +165,7 @@ module.exports = function () {
                                 // 增加这个
                                 esModule: false,
                                 name: '[hash:12].[ext]',
-                                outputPath: `/images`
+                                outputPath: `images`
                             },
                         }
                     ]
@@ -182,7 +183,8 @@ module.exports = function () {
             extensions: ['.js', '.tsx', 'vue', '.html'],
             /** 别名 */
             alias: {
-                bootstrap: 'bootstrap/dist/css/bootstrap.css'
+                bootstrap: 'bootstrap/dist/css/bootstrap.css',
+                "@src": path.resolve(process.cwd(), 'src')
             }
         }
     }

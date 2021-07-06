@@ -95,10 +95,22 @@
 -   webpack内置方法，IgnorePlugin
 -       plugins内配置 new webpack.IgnorePlugin(/\.\/locale/,/moment/), 打包后大小没有变化
 -   动态链接库 dllPlugin、dllreferencePlugin 待确认？？？
--   多线程打包 happypack
+-   多线程打包 happypack, 大项目中减少打包时间
 -       yarn add happypack
+-   webpack自带优化功能
+-       tree-shaking 使用import * from '*' 引入，生成环境打包时，会自动过滤未使用的代码,
+-       scope hosting 作用域提升， 
 
 
 ## webpack 配置 React
 -   yarn add react react-dom
--   
+
+## wqebpack 抽取公共代码
+-   splitChunks: 查看webpack内配置， 并网上查找详细介绍
+
+## webpack 懒加载 (js、vue、 react的懒加载实现都是 import语法)
+-   yarn add babel-plugin-syntax-dynamic-import -D  ->>> 没有效果, webpack 5 不需要添加这个
+-   babel-eslint：  eslint 默认解析器可能不支持动态导入，需要添加该插件
+-       yarn add babel-eslint -D -> 需要在 .eslintrc文件进行配置，parser": "babel-eslint"
+
+## webpack 热更新
