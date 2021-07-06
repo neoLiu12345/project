@@ -4,10 +4,8 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 // 抽离css文件
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-// 压缩css文件
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
-// 压缩Js文件
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+// 删除当前打包文件夹下的内容
+let { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 // const webpack = require('webpack')
 
@@ -46,6 +44,10 @@ module.exports = function () {
             new MiniCssExtractPlugin({
                 filename: '[name].css',
                 publicPath: `${staticPath}/css/`
+            }),
+            /** 删除文件 */
+            new CleanWebpackPlugin({
+                cleanOnceBeforeBuildPatterns: ['./dist/images', '!.gitignore'],
             })
         ].concat(filesname.map(filename =>  
             /** 生产打包后的html文件 */ // return省略了
@@ -145,16 +147,6 @@ module.exports = function () {
                         }
                     ]
                 }
-            ]
-        },
-        /** 优化项 */
-        optimization: {
-            minimize: true,
-            minimizer: [
-                /** 压缩css */
-                new CssMinimizerPlugin(),
-                /** 压缩js */
-                new UglifyJsPlugin()
             ]
         },
         /** 打包时过滤的插件 */

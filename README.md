@@ -29,6 +29,11 @@
 -       yarn add @babel/plugin-proposal-decorators -D // 待确认
 -       yarn add @babel/plugin-transform-runtime -D  // function * gen () {}
 -       yarn add @babel/polyfill  需要引入代码内，把能加-D -> 'aaa': includes('a')
+-   清楚当前打包文件夹下的文件插件： clean-webpack-plugin
+-       yarn add clean-webpack-plugin -D -> 选择性使用
+-   复制webpack：  copy-webpack-plugin  -> 选择性使用
+-       yarn add copy-webpack-plugin -D
+-   内置模块：banner-webpack-plugin 
 
 ## Loader 模块规则
 -   css相关
@@ -59,4 +64,15 @@
 ## 其他
 -   打包时 删除console.log,  -目前没有安装，看实际情况
 -       yarn add uglifyjs-webpack-plugin -D
--   sourceMap
+
+## webpack
+-   devtool（和eslist的区别）：增加映射文件，可以帮助我们调试源代码， source-map、eval-source-map、cheap-module-source-map、cheap-module-eval-source-map 四种的却别
+-       source-map：源码映射会生成一个 sourcemap 文件   
+-       eval-source-map：不会产生单独的文件 但是可以显示行 和 列  
+-       cheap-module-source-map： 不会产生列 但是是一个单独的映射文件 -》 产生后可以保留进行调试
+-       cheap-module-eval-source-map： 不会产生文件， 集成在打包后的文件中 不会产生列
+
+
+## 跨越问题
+-   服务端启动webpack, 在服务端启动webpack
+-       yarn add webpack-dev-middleware -D ---》 选择性使用

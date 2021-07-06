@@ -2,13 +2,9 @@
 
 require('./scss.scss')
 
-
-console.log('other')
-
-
-class Log {
-    msg = 'log message'
+let xhr = new XMLHttpRequest()
+xhr.open('GET', '/api/user', true)
+xhr.onload = () => {
+    console.log(xhr.response)
 }
-let log = new Log()
-
-console.log(log.msg)
+xhr.send()
