@@ -9,6 +9,9 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 const webpack = require('webpack')
 
+// 多线程打包
+const Happypack = require('happypack')
+
 // 静态资源地址
 const staticPath = 'http://localhost:3000'
 module.exports = function () {
@@ -56,6 +59,27 @@ module.exports = function () {
                 // DEV可根绝接口进行配置， dev可以是对应的接口地址比如：http://dex.waliwang.com/api/*
                 DEV: JSON.stringify('dev'),// 字符串可以 通过JSON.stringfy()
                 FLAG: 'true',// 布尔值, 或其他非字符串 不需要加，JSON.stringfy()
+            }),
+            /** 打包优化 */
+            new Happypack({
+                id: 'js',
+                use: [
+                    {
+                        loader: 'babel-loader',
+                        // 用babel-loader 需要把es6转es5
+                        options: {
+                            presets: [
+                                '@babel/preset-env'
+                            ],
+                            // plugins: [
+                            //     // "@babel/plugin-transform-runtime", //有问题后期查
+                            //     ['@babel/plugin-proposal-decorators', {"legacy": true}],
+                            //     ['@babel/plugin-proposal-class-properties', {"loose": true}]
+                            // ]
+                            // plugins: ["transform-decorators-legacy", "transform-class-properties"]
+                        }
+                    }
+                ]
             })
         ].concat(filesname.map(filename =>  
             /** 生产打包后的html文件 */ // return省略了
@@ -101,21 +125,8 @@ module.exports = function () {
                     test: /\.js$/,
                     exclude: /node_modules/,
                     include: path.resolve('src'),
-                    use: {
-                        loader: 'babel-loader',
-                        /** 用babel-loader 需要把es6转es5 */
-                        options: {
-                            presets: [
-                                '@babel/preset-env'
-                            ],
-                            // plugins: [
-                            //     // "@babel/plugin-transform-runtime", //有问题后期查
-                            //     ['@babel/plugin-proposal-decorators', {"legacy": true}],
-                            //     ['@babel/plugin-proposal-class-properties', {"loose": true}]
-                            // ]
-                            // plugins: ["transform-decorators-legacy", "transform-class-properties"]
-                        }
-                    }
+                    use: 'Happypack/loader?id=js'
+                    /** 使用 happypack ，先注视 babel-loader 一动到 plugins， 代表多线程打包，内使用的是 ，babel的方法*/
                 },
                 /** loader 顺序，默认从右向左，从下向上执行
                  * style-loader 他是把css 插入到head的标签内
@@ -126,7 +137,7 @@ module.exports = function () {
                 */
                 {
                     test: /\.(css|scss|less)$/,
-                    // exclude: /node_modules/,
+                    exclude: /node_modules/,
                     use: [
                         /** 可以是对象的形式 */
                         // {

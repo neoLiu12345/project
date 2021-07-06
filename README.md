@@ -96,6 +96,7 @@
 -       plugins内配置 new webpack.IgnorePlugin(/\.\/locale/,/moment/), 打包后大小没有变化
 -   动态链接库 dllPlugin、dllreferencePlugin 待确认？？？
 -   多线程打包 happypack
+-       yarn add happypack
 
 
 ## webpack 配置 React

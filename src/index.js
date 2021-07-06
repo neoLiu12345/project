@@ -1,10 +1,10 @@
-import 'bootstrap'
+// import 'bootstrap'
 import './home.scss'
-import moment from 'moment'
+// import moment from 'moment'
 
-import 'moment/locale/zh-cn'
-let r = moment().endOf('day').fromNow()
-console.log(r)
+// import 'moment/locale/zh-cn'
+// let r = moment().endOf('day').fromNow()
+// console.log(r)
 
 console.log('DEV: ', DEV)
 if(DEV === 'dev') {
