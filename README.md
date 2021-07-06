@@ -24,7 +24,7 @@
 -   Js压缩： yarn add uglifyjs-webpack-plugin
 -       yarn add uglifyjs-webpack-plugin -D
 -   Es6+ 转为Es5格式： babel-loader @babel/core @babel/preset-env
--       yarn add babel-loader @babel/core @babel/preset-env -D
+-       yarn add babel-loader @babel/core @babel/preset-env @babel/preset-react -D
 -       yarn add @babel/plugin-proposal-class-properties -D // 待确认
 -       yarn add @babel/plugin-proposal-decorators -D // 待确认
 -       yarn add @babel/plugin-transform-runtime -D  // function * gen () {}
@@ -64,6 +64,7 @@
 ## 其他
 -   打包时 删除console.log,  -目前没有安装，看实际情况
 -       yarn add uglifyjs-webpack-plugin -D
+-   webpack-merge -> 选择使用
 
 ## webpack
 -   devtool（和eslist的区别）：增加映射文件，可以帮助我们调试源代码， source-map、eval-source-map、cheap-module-source-map、cheap-module-eval-source-map 四种的却别
@@ -84,3 +85,17 @@
 
 ## 定义环境变量
 -    webpack自带插件  webpack.definePlugin
+
+## webpack 优化
+-   noParse   -》？只需要配置 不解析 jquery就行了吗
+-   exclude 排除文件夹，不查找
+-   include path.resolve('src') ,只在src文件夹下查找
+-   moment --> 时间处理 
+-       yarn add moment
+-   webpack内置方法，IgnorePlugin
+-       plugins内配置 new webpack.IgnorePlugin(/\.\/locale/,/moment/), 打包后大小没有变化
+-   动态链接库
+
+
+## webpack 配置 React
+-   yarn add react react-dom 

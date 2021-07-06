@@ -1,7 +1,10 @@
 import 'bootstrap'
 import './home.scss'
+import moment from 'moment'
 
-
+import 'moment/locale/zh-cn'
+let r = moment().endOf('day').fromNow()
+console.log(r)
 
 console.log('DEV: ', DEV)
 if(DEV === 'dev') {
@@ -49,4 +52,5 @@ console.log('home sad asda1231f')
 import logo from './logo.png'
 let image = new Image()
 image.src = logo
-document.body.appendChild(image)
+let bodyDom = document.getElementsByTagName('body')[0]
+bodyDom.appendChild(image)

@@ -1,4 +1,4 @@
-// node 内置模块，不需要安装
+// 绝对路径， node 内置模块，不需要安装,
 const path = require('path')
 // 根据模版，生成html
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -10,7 +10,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const webpack = require('webpack')
 
 // 静态资源地址
-const staticPath = 'http://localhost:3000/'
+const staticPath = 'http://localhost:3000'
 module.exports = function () {
     let filesname = ['index', 'other']
     let entry = {}
@@ -28,9 +28,9 @@ module.exports = function () {
         // },
         /** 出口文件 */
         output: {
-            filename: '[name].bundle.[hash:8].js',// 打包后的文件名name: 入口名称是什么默认就是什么名称    hash:8自动生产8位数的数字字母，保持每次打包文件名不一样（解决缓存问题）
+            filename: 'js/[name].bundle.[hash:8].js',// 打包后的文件名name: 入口名称是什么默认就是什么名称    hash:8自动生产8位数的数字字母，保持每次打包文件名不一样（解决缓存问题）
             path: path.resolve('dist'),// 路径必须是一个绝对路径，（__dirname）以当前目录产生一个绝对路径
-            publicPath: staticPath//全部加，也可以单独给css、js、img加路径
+            publicPath: staticPath//静态资源，添加出口的路径，也可以单独给css、js、img加路径
         },
         /** 插件  */
         plugins: [
@@ -40,16 +40,17 @@ module.exports = function () {
             //     hash: false,
             //     chunks: ['other']
             // }),
+            /** 优化， 过滤，第三方插件内部引用的代码, 未有改变大小，待确认 */
+            new webpack.IgnorePlugin(/\.\/locale/,/moment$/),
             /** 抽离样式 */
             new MiniCssExtractPlugin({
-                filename: '[name].css',
-                publicPath: `${staticPath}/css/`
+                filename: 'css/[name].css'
             }),
             /** 删除文件 根据实际情况决定 */
-            // new CleanWebpackPlugin({
-            //     cleanOnceBeforeBuildPatterns: ['./dist', '!.gitignore'],
-            //     // cleanOnceBeforeBuildPatterns: ['需要删除的文件目录', '!.gitignore'],
-            // }),
+            new CleanWebpackPlugin({
+                cleanOnceBeforeBuildPatterns: ['dist', '!.gitignore'],
+                // cleanOnceBeforeBuildPatterns: ['需要删除的文件目录', '!.gitignore'],
+            }),
             /** 定义环境变量. 可以抽离出去，区分开发和测试环境， */
             new webpack.DefinePlugin({
                 // DEV可根绝接口进行配置， dev可以是对应的接口地址比如：http://dex.waliwang.com/api/*
@@ -79,6 +80,8 @@ module.exports = function () {
         )),
         /** 模块 */
         module: {
+            /** 不去解析 * 中的依赖关系 */
+            noParse: /jquery/,
             rules: [
                 {
                     test: /\.html$/,
@@ -97,6 +100,7 @@ module.exports = function () {
                 {
                     test: /\.js$/,
                     exclude: /node_modules/,
+                    include: path.resolve('src'),
                     use: {
                         loader: 'babel-loader',
                         /** 用babel-loader 需要把es6转es5 */
@@ -104,11 +108,11 @@ module.exports = function () {
                             presets: [
                                 '@babel/preset-env'
                             ],
-                            plugins: [
-                                // "@babel/plugin-transform-runtime", //有问题后期查
-                                ['@babel/plugin-proposal-decorators', {"legacy": true}],
-                                ['@babel/plugin-proposal-class-properties', {"loose": true}]
-                            ]
+                            // plugins: [
+                            //     // "@babel/plugin-transform-runtime", //有问题后期查
+                            //     ['@babel/plugin-proposal-decorators', {"legacy": true}],
+                            //     ['@babel/plugin-proposal-class-properties', {"loose": true}]
+                            // ]
                             // plugins: ["transform-decorators-legacy", "transform-class-properties"]
                         }
                     }
@@ -149,7 +153,7 @@ module.exports = function () {
                                 // 增加这个
                                 esModule: false,
                                 name: '[hash:12].[ext]',
-                                outputPath: `images`
+                                outputPath: `/images`
                             },
                         }
                     ]
