@@ -17,6 +17,8 @@ module.exports = function (env) {
      */
     webpackBase.devtool = 'source-map',
     webpackBase.devServer = {
+            // 是否启用，热更新
+            hot: true,
             // 端口号
             port: 3000,
             // 打包进度条

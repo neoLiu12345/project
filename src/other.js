@@ -12,7 +12,7 @@ require('./scss.scss')
 // xhr.send()
 
 let button = document.createElement('button')
-button.innerHTML = '懒加载js'
+button.innerHTML = '懒加s载js'
 button.addEventListener('click', function() {
     import(/* webpackChunkName: 'ys' */ './ys.js').then(data => {
         console.log(data.default)

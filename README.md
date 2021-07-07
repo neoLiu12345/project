@@ -65,6 +65,7 @@
 -   打包时 删除console.log,  -目前没有安装，看实际情况
 -       yarn add uglifyjs-webpack-plugin -D
 -   webpack-merge -> 选择使用
+-   Tapable
 
 ## webpack
 -   devtool（和eslist的区别）：增加映射文件，可以帮助我们调试源代码， source-map、eval-source-map、cheap-module-source-map、cheap-module-eval-source-map 四种的却别
@@ -100,7 +101,9 @@
 -   webpack自带优化功能
 -       tree-shaking 使用import * from '*' 引入，生成环境打包时，会自动过滤未使用的代码,
 -       scope hosting 作用域提升， 
-
+-   webpack 热更新，自带方法 -- 根据项目需求判断是否需要
+-       NameModulesPlugin // 打印更新的模块路径
+-       HotModuleReplacementPlugin //热更新插件      
 
 ## webpack 配置 React
 -   yarn add react react-dom
@@ -113,4 +116,3 @@
 -   babel-eslint：  eslint 默认解析器可能不支持动态导入，需要添加该插件
 -       yarn add babel-eslint -D -> 需要在 .eslintrc文件进行配置，parser": "babel-eslint"
 
-## webpack 热更新
